@@ -47,9 +47,9 @@ dev = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/username/badzipfliter"
-"Bug Tracker" = "https://github.com/username/badzipfliter/issues"
-"Documentation" = "https://github.com/username/badzipfliter#readme"
+"Homepage" = "https://github.com/HibernalGlow/ImageFliter"
+"Bug Tracker" = "https://github.com/HibernalGlow/ImageFliter/issues"
+"Documentation" = "https://github.com/HibernalGlow/ImageFliter#readme"
 
 [project.scripts]
 badzipfliter = "badzipfliter.__main__:main"

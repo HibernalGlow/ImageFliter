@@ -8,9 +8,9 @@ from pathlib import Path
 from loguru import logger
 
 # 导入自定义模块
-from badzipfliter.logger_module import setup_logger
-from badzipfliter.path_handler import get_valid_paths
-from badzipfliter.archive_checker import process_directory
+from .logger_module import setup_logger
+from .path_handler import get_valid_paths
+from .archive_checker import process_directory
 
 # 尝试导入TUI界面模块（可能在某些环境下不可用）
 try:
@@ -19,10 +19,14 @@ try:
 except ImportError:
     TEXTUAL_AVAILABLE = False
 
-from badzipfliter.config import TEXTUAL_LAYOUT
+from .config import TEXTUAL_LAYOUT
 
 def main():
-    """主程序入口函数"""
+    """主程序入口函数
+    
+    返回:
+        int: 状态码，0 表示成功，1 表示未提供有效路径，2 表示处理过程中出现错误
+    """
     parser = argparse.ArgumentParser(description='压缩包完整性检查工具')
     parser.add_argument('paths', nargs='*', help='要处理的路径列表')
     parser.add_argument('-c', '--clipboard', action='store_true', help='从剪贴板读取路径')
@@ -46,7 +50,7 @@ def main():
     
     if not directories:
         logger.error("[#error] ❌ 未提供任何有效的路径")
-        return
+        return 1  # 返回错误状态码 1：未提供有效路径
 
     # 根据命令行参数决定是否跳过已检查的文件
     skip_checked = not args.force_check
@@ -60,15 +64,27 @@ def main():
     
     # 处理每个目录
     total_dirs = len(directories)
+    errors_occurred = False
+    
     for idx, directory in enumerate(directories):
-        dir_progress = int((idx / total_dirs) * 100) if total_dirs > 0 else 100
-        logger.info(f"[@progress] 处理目录 ({idx+1}/{total_dirs}) {dir_progress}%")
-        logger.info(f"[#status] 📂 开始处理目录: {directory}")
-        process_directory(directory, skip_checked, max_workers=max_workers)
-        logger.info(f"[#success] ✅ 目录处理完成: {directory}")
+        try:
+            dir_progress = int((idx / total_dirs) * 100) if total_dirs > 0 else 100
+            logger.info(f"[@progress] 处理目录 ({idx+1}/{total_dirs}) {dir_progress}%")
+            logger.info(f"[#status] 📂 开始处理目录: {directory}")
+            process_result = process_directory(directory, skip_checked, max_workers=max_workers)
+            # 如果 process_directory 函数返回了结果，可以在这里判断
+            logger.info(f"[#success] ✅ 目录处理完成: {directory}")
+        except Exception as e:
+            errors_occurred = True
+            logger.error(f"[#error] ❌ 处理目录 {directory} 时出错: {str(e)}")
     
     # 最终完成
     logger.info(f"[@progress] 处理目录 ({total_dirs}/{total_dirs}) 100%")
+    
+    # 返回最终状态码
+    if errors_occurred:
+        return 2  # 处理过程中出现错误
+    return 0  # 成功完成全部处理
     
 if __name__ == "__main__":
     main()
