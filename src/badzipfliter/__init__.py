@@ -7,7 +7,7 @@ BadZipFliter 包 - 用于检查压缩文件的完整性
 __version__ = "0.1.0"
 
 # 导出主要功能
-from .__main__ import main as run_check
+from .__main__ import  run_check
 from .archive_checker import check_archive, process_directory, get_archive_files
 
 # 导出为公共 API
