@@ -6,7 +6,7 @@ from nodes.pics.filter.watermark_detector import WatermarkDetector
 from nodes.pics.filter.cv_text_image_detector import CVTextImageDetector
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import multiprocessing
-from nodes.record.logger_config import setup_logger
+from loguru import logger
 from nodes.pics.filter.duplicate_image_detector import DuplicateImageDetector
 from nodes.pics.filter.small_image_detector import SmallImageDetector
 from nodes.pics.filter.grayscale_image_detector import GrayscaleImageDetector
@@ -16,7 +16,6 @@ from nodes.pics.filter.grayscale_image_detector import GrayscaleImageDetector
 #     'console_enabled': True
 # }
 # logger, config_info = setup_logger(config)
-logger = logging.getLogger(__name__)
 class ImageFilter:
     """图片过滤器，支持多种独立的过滤功能"""
     
