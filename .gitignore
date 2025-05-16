@@ -11,3 +11,4 @@ wheels/
 /src/badzipfliter/archive_check_history.json
 /src/badzipfliter/logs
 *.log
+/src/badzfliter/archive_check_history.json
