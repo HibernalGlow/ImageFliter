@@ -11,7 +11,7 @@ import pyperclip
 from pathlib import Path
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from nodes.tui.textual_logger import TextualLoggerManager
+from textual_logger import TextualLoggerManager
 from nodes.record.logger_config import setup_logger
 from loguru import logger
 import os

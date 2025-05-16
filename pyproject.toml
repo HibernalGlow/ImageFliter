@@ -26,11 +26,15 @@ dependencies = [
     "loguru>=0.6.0",
     "pyperclip>=1.8.2",
     "loguru>=0.7.0",
+    "send2trash",
+    "numpy",
+    "requests",
+    "tqdm",
     "pillow>=10.0.0",
-    # "pyvips>=2.2.1",
-    # "textual>=0.40.0",
+    "pyvips>=2.2.1",
+    "textual>=0.40.0",
     "pathlib>=1.0.1",
-    # "typing-extensions>=4.7.0",
+    "typing-extensions>=4.7.0",
     "pillow-avif-plugin>=1.4.6",
     "pillow-jxl-plugin>=1.3.2",
     "TextualLog @ git+https://github.com/HibernalGlow/TextualLog.git",
@@ -52,7 +56,8 @@ dev = [
 "Documentation" = "https://github.com/HibernalGlow/ImageFliter#readme"
 
 [project.scripts]
-badzipfliter = "badzipfliter.__main__:main"
+zipfliter = "zipfliter.__main__:main"
+imgfliter = "imgfliter.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
