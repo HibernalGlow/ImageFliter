@@ -1,21 +1,19 @@
-from ast import arg
+"""
+ImgFilter核心过滤器模块
+"""
 import os
 import logging
 from typing import List, Set, Dict, Tuple
-from nodes.pics.filter.watermark_detector import WatermarkDetector
-from nodes.pics.filter.cv_text_image_detector import CVTextImageDetector
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import multiprocessing
 from loguru import logger
-from nodes.pics.filter.duplicate_image_detector import DuplicateImageDetector
-from nodes.pics.filter.small_image_detector import SmallImageDetector
-from nodes.pics.filter.grayscale_image_detector import GrayscaleImageDetector
 
-# config = {
-#     'script_name': 'nodes.pics.image_filter',
-#     'console_enabled': True
-# }
-# logger, config_info = setup_logger(config)
+from imgfilter.detectors.watermark import WatermarkDetector
+from imgfilter.detectors.text import CVTextImageDetector
+from imgfilter.detectors.duplicate import DuplicateImageDetector
+from imgfilter.detectors.small import SmallImageDetector
+from imgfilter.detectors.grayscale import GrayscaleImageDetector
+
 class ImageFilter:
     """图片过滤器，支持多种独立的过滤功能"""
     
